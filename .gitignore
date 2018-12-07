@@ -109,6 +109,3 @@ venv.bak/
 
 # IDE
 .DS_Store
-
-# Data
-/Data/*
