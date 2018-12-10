@@ -7,9 +7,9 @@ class Document:
         self.summary = ''
 
 
-def parse_file():
+def parse_file(file_location):
 
-    with open("Data/CACM/cacm.all", 'r') as cacm:
+    with open(file_location, 'r') as cacm:
 
         documents = []
 
@@ -65,4 +65,4 @@ def parse_file():
         return documents
 
 if __name__ == '__main__':
-    documents = parse_file()
+    documents = parse_file("Data/CACM/cacm.all")
