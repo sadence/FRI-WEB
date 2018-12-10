@@ -28,6 +28,24 @@ class Document:
                 self.tokens[token] = self.tokens.get(token, 0) + 1
 
 
+class Corpus:
+
+    def __init__(self, documents):
+        self.documents = documents
+        self.vocabulaire = set()
+
+        # Construit le vocabulaire
+        for document in documents:
+            document.tokenize()
+
+            self.vocabulaire.update(document.tokens.keys())
+
+    def add_document(self, document):
+        if isinstance(document, Document):
+            self.documents.append(document)
+            self.vocabulaire.update(document.tokens.keys())
+
+
 def parse_file(file_location):
 
     with open(file_location, 'r') as cacm:
@@ -97,3 +115,7 @@ def parse_file(file_location):
 
 if __name__ == '__main__':
     documents = parse_file("Data/CACM/cacm.all")
+
+    corpus = Corpus(documents)
+
+    print(corpus.vocabulaire)
