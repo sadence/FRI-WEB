@@ -39,6 +39,7 @@ class TestParseFile(unittest.TestCase):
     def test_first_doc_tokens(self):
         """ Test if the first document has the right tokens """
         first_doc = self.documents[0]
+        first_doc.tokenize()
         expected_tokens = {
             "Preliminary": 1,
             "Report": 1,
@@ -51,16 +52,17 @@ class TestParseFile(unittest.TestCase):
     def test_tenth_doc_tokens(self):
         """ Test if the tenth document has the right tokens """
         tenth_doc = self.documents[9]
+        tenth_doc.tokenize()
         expected_tokens = {
             "Code": 1,
             "Extension": 1,
             "Procedures": 1,
             "for": 1,
             "Information": 1,
-            "Interchange*": 1,
-            "(Proposed": 1,
+            "Interchange": 1,
+            "Proposed": 1,
             "USA": 1,
-            "Standard)": 1,
+            "Standard": 1,
             "standard": 2,
             "code": 4,
             "information": 1,
