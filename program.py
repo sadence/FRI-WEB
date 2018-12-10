@@ -21,13 +21,15 @@ def parse_file(file_location):
             'author': '.A',
             'add_date': '.N',
             'references': '.X',
-            'keywords': '.K'
+            'keywords': '.K',
+            'chapters': '.C'
         }
 
         current_document = None
         current_marker = None
 
         for line in cacm:
+            line = line.strip()
             if line is None:
                 pass
             elif line.startswith(markers['index']):
@@ -48,6 +50,9 @@ def parse_file(file_location):
             elif line.startswith(markers['references']):
                 # ignore marker
                 current_marker = None
+            elif line.startswith(markers['chapters']):
+                # ignore marker
+                current_marker = None
             elif line.startswith(markers['summary']):
                 current_marker = 'summary'
             elif line.startswith(markers['keywords']):
@@ -55,12 +60,16 @@ def parse_file(file_location):
 
             else:
                 if current_marker == 'title':
+                    if len(current_document.title) > 0 :
+                        current_document.title += " "
                     current_document.title += line
                 elif current_marker == 'summary':
+                    if len(current_document.summary) > 0 :
+                        current_document.summary += " "
                     current_document.summary += line
                 elif current_marker == 'keywords':
                     keywords = line.split(',')
-                    current_document.keywords += keywords
+                    current_document.keywords += [k.strip() for k in keywords if k != ""]
 
         return documents
 
