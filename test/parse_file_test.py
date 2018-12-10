@@ -35,6 +35,52 @@ class TestParseFile(unittest.TestCase):
         """ Test if a multiline title is correctly interpreted """
         tenth_doc = self.documents[9]
         self.assertEqual(tenth_doc.title, "Code Extension Procedures for Information Interchange* (Proposed USA Standard)")
+    
+    def test_first_doc_tokens(self):
+        """ Test if the first document has the right tokens """
+        first_doc = self.documents[0]
+        expected_tokens = {
+            "Preliminary": 1,
+            "Report": 1,
+            "International": 1,
+            "Algebraic": 1,
+            "Language": 1
+        }
+        self.assertDictEqual(first_doc.tokens, expected_tokens)
+    
+    def test_tenth_doc_tokens(self):
+        """ Test if the tenth document has the right tokens """
+        tenth_doc = self.documents[9]
+        expected_tokens = {
+            "Code": 1,
+            "Extension": 1,
+            "Procedures": 1,
+            "for": 1,
+            "Information": 1,
+            "Interchange*": 1,
+            "(Proposed": 1,
+            "USA": 1,
+            "Standard)": 1,
+            "standard": 2,
+            "code": 4,
+            "information": 1,
+            "interchange": 1,
+            "characters": 1,
+            "shift": 2,
+            "out": 1,
+            "in": 1,
+            "escape": 2,
+            "data": 1,
+            "link": 1,
+            "control": 1,
+            "functions":1,
+            "procedures": 1,
+            "extension": 1,
+            "table": 1,
+            "bit": 1,
+            "pattern": 1
+        }
+        self.assertDictEqual(tenth_doc.tokens, expected_tokens)
 
 if __name__ == "__main__" :
     unittest.main()
