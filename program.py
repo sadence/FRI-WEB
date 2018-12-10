@@ -12,7 +12,7 @@ class Document:
 
     def tokenize(self):
         self.tokens = dict()
-        reg = re.compile("[\s,\.\{\}\(\)\"-]+")
+        reg = re.compile("[\s,\.\{\}\(\)\"-]+\*")
 
         # Tokenizing title
         tokenList = reg.split(self.title)
@@ -99,16 +99,17 @@ def parse_file(file_location):
 
             else:
                 if current_marker == 'title':
-                    if len(current_document.title) > 0 :
+                    if len(current_document.title) > 0:
                         current_document.title += " "
                     current_document.title += line
                 elif current_marker == 'summary':
-                    if len(current_document.summary) > 0 :
+                    if len(current_document.summary) > 0:
                         current_document.summary += " "
                     current_document.summary += line
                 elif current_marker == 'keywords':
                     keywords = line.split(',')
-                    current_document.keywords += [k.strip() for k in keywords if k != ""]
+                    current_document.keywords += [k.strip()
+                                                  for k in keywords if k != ""]
 
         return documents
 
