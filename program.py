@@ -87,10 +87,4 @@ def parse_file(file_location):
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     documents = parse_file("Data/CACM/cacm.all")
-=======
-    documents = parse_file()
-    documents[0].tokenize()
-    print(documents[0].tokens)
->>>>>>> Add Tokenizer to document class
