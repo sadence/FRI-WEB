@@ -1,3 +1,6 @@
+import re
+
+
 class Document:
 
     def __init__(self, index):
@@ -5,6 +8,24 @@ class Document:
         self.title = ''
         self.keywords = []
         self.summary = ''
+        self.tokens = dict()
+
+    def tokenize(self):
+        self.tokens = dict()
+        reg = re.compile("[\s,\.\{\}\(\)\"-]+")
+
+        # Tokenizing title
+        tokenList = reg.split(self.title)
+        # Tokenizing summary
+        if self.summary != '':
+            tokenList += reg.split(self.summary)
+        # Tokenizing kewords
+        tokenList += self.keywords
+
+        # Counting tokens
+        for token in tokenList:
+            if token != '':
+                self.tokens[token] = self.tokens.get(token, 0) + 1
 
 
 def parse_file(file_location):
@@ -72,6 +93,7 @@ def parse_file(file_location):
                     current_document.keywords += [k.strip() for k in keywords if k != ""]
 
         return documents
+
 
 if __name__ == '__main__':
     documents = parse_file("Data/CACM/cacm.all")
