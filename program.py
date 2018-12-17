@@ -15,13 +15,13 @@ class Document:
         reg = re.compile("[^a-zA-Z0-9]+") # pylint: disable=W1401
 
         # Tokenizing title
-        tokenList = reg.split(self.title)
+        tokenList = reg.split(self.title.lower())
         # Tokenizing summary
         if self.summary != '':
-            tokenList += reg.split(self.summary)
+            tokenList += reg.split(self.summary.lower())
         # Tokenizing kewords
         for i in range(len(self.keywords)):
-            tokenList += reg.split(self.keywords[i])
+            tokenList += reg.split(self.keywords[i].lower())
 
         # Counting tokens
         for token in tokenList:
@@ -34,6 +34,9 @@ class Corpus:
     def __init__(self, documents):
         self.documents = documents
         self.vocabulaire = set()
+        self.stop_words = set()
+
+        self.import_stop_words()
 
         # Construit le vocabulaire
         for document in documents:
@@ -41,10 +44,17 @@ class Corpus:
 
             self.vocabulaire.update(document.tokens.keys())
 
+        self.vocabulaire -= self.stop_words
+
     def add_document(self, document):
         if isinstance(document, Document):
             self.documents.append(document)
             self.vocabulaire.update(document.tokens.keys())
+
+    def import_stop_words(self):
+        with open("./Data/CACM/common_words") as stop_words:
+            for line in stop_words:
+                self.stop_words.add(line.strip())
 
 
 def parse_file(file_location):
@@ -121,3 +131,4 @@ if __name__ == '__main__':
     corpus = Corpus(documents)
 
     print(corpus.vocabulaire)
+    print(len(corpus.vocabulaire))
