@@ -12,7 +12,7 @@ class Document:
 
     def tokenize(self):
         self.tokens = dict()
-        reg = re.compile("[\s,\.\{\}\(\)\"-]+")
+        reg = re.compile("[^a-zA-Z0-9]+")
 
         # Tokenizing title
         tokenList = reg.split(self.title)
@@ -20,7 +20,8 @@ class Document:
         if self.summary != '':
             tokenList += reg.split(self.summary)
         # Tokenizing kewords
-        tokenList += self.keywords
+        for i in range(len(self.keywords)):
+            tokenList += reg.split(self.keywords[i])
 
         # Counting tokens
         for token in tokenList:

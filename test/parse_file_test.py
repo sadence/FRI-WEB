@@ -5,6 +5,7 @@ import unittest
 sys.path.append(os.getcwd())
 from program import parse_file
 
+
 class TestParseFile(unittest.TestCase):
 
     """ Test case for the parse_file method """
@@ -22,7 +23,8 @@ class TestParseFile(unittest.TestCase):
         """ Test if the first document contains the correct informations """
         first_doc = self.documents[0]
         self.assertEqual(first_doc.index, 1)
-        self.assertEqual(first_doc.title, "Preliminary Report-International Algebraic Language")
+        self.assertEqual(
+            first_doc.title, "Preliminary Report-International Algebraic Language")
         self.assertEqual(first_doc.summary, "")
 
     def test_tenth_doc_keywords(self):
@@ -34,8 +36,9 @@ class TestParseFile(unittest.TestCase):
     def test_multiline_title(self):
         """ Test if a multiline title is correctly interpreted """
         tenth_doc = self.documents[9]
-        self.assertEqual(tenth_doc.title, "Code Extension Procedures for Information Interchange* (Proposed USA Standard)")
-    
+        self.assertEqual(
+            tenth_doc.title, "Code Extension Procedures for Information Interchange* (Proposed USA Standard)")
+
     def test_first_doc_tokens(self):
         """ Test if the first document has the right tokens """
         first_doc = self.documents[0]
@@ -48,7 +51,7 @@ class TestParseFile(unittest.TestCase):
             "Language": 1
         }
         self.assertDictEqual(first_doc.tokens, expected_tokens)
-    
+
     def test_tenth_doc_tokens(self):
         """ Test if the tenth document has the right tokens """
         tenth_doc = self.documents[9]
@@ -75,7 +78,7 @@ class TestParseFile(unittest.TestCase):
             "data": 1,
             "link": 1,
             "control": 1,
-            "functions":1,
+            "functions": 1,
             "procedures": 1,
             "extension": 1,
             "table": 1,
@@ -84,5 +87,6 @@ class TestParseFile(unittest.TestCase):
         }
         self.assertDictEqual(tenth_doc.tokens, expected_tokens)
 
-if __name__ == "__main__" :
+
+if __name__ == "__main__":
     unittest.main()
