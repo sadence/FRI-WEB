@@ -9,10 +9,13 @@ class Document:
         self.keywords = []
         self.summary = ''
         self.tokens = dict()
+        self.number_of_tokens = 0
 
     def tokenize(self):
+        # reset in case of retokenization
         self.tokens = dict()
-        reg = re.compile("[^a-zA-Z0-9]+") # pylint: disable=W1401
+        self.number_of_tokens = 0
+        reg = re.compile("[^a-zA-Z0-9]+")  # pylint: disable=W1401
 
         # Tokenizing title
         tokenList = reg.split(self.title.lower())
@@ -27,6 +30,7 @@ class Document:
         for token in tokenList:
             if token != '':
                 self.tokens[token] = self.tokens.get(token, 0) + 1
+                self.number_of_tokens += 1
 
 
 class Corpus:
@@ -35,6 +39,7 @@ class Corpus:
         self.documents = documents
         self.vocabulaire = set()
         self.stop_words = set()
+        self.number_of_tokens = 0
 
         self.import_stop_words()
 
@@ -43,6 +48,7 @@ class Corpus:
             document.tokenize()
 
             self.vocabulaire.update(document.tokens.keys())
+            self.number_of_tokens += document.number_of_tokens
 
         self.vocabulaire -= self.stop_words
 
@@ -132,3 +138,4 @@ if __name__ == '__main__':
 
     print(corpus.vocabulaire)
     print(len(corpus.vocabulaire))
+    print(corpus.number_of_tokens)
