@@ -12,7 +12,7 @@ class Document:
 
     def tokenize(self):
         self.tokens = dict()
-        reg = re.compile("[^a-zA-Z0-9]+")
+        reg = re.compile("[^a-zA-Z0-9]+") # pylint: disable=W1401
 
         # Tokenizing title
         tokenList = reg.split(self.title)
