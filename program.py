@@ -12,7 +12,7 @@ class Document:
 
     def tokenize(self):
         self.tokens = dict()
-        reg = re.compile("[\s,\.\{\}\(\)\"-]+\*")
+        reg = re.compile("[\s,\.\{\}\(\)\"-]+")
 
         # Tokenizing title
         tokenList = reg.split(self.title)
