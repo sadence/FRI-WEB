@@ -1,3 +1,4 @@
+import math
 import re
 from matplotlib import pyplot as plt
 
@@ -69,8 +70,16 @@ class Corpus:
                 self.stop_words.add(line.strip())
 
     def plot_rank_frequency(self):
+        plt.subplot(2, 1, 1)
         plt.plot(range(len(self.frequences.keys())), sorted(
             self.frequences.values(), reverse=True))
+        plt.title("Graphe frequence / rang")
+
+        plt.subplot(2, 1, 2)
+        plt.plot([math.log(f) for f in range(1, len(self.frequences.keys()) + 1)], [math.log(r) for r in sorted(
+            self.frequences.values(), reverse=True)])
+        plt.title("Graphe log(f) / log(r)")
+
         plt.show()
 
 
