@@ -1,4 +1,5 @@
 import re
+from matplotlib import pyplot as plt
 
 
 class Document:
@@ -40,6 +41,7 @@ class Corpus:
         self.vocabulaire = set()
         self.stop_words = set()
         self.number_of_tokens = 0
+        self.frequences = dict()  # does not include stop words
 
         self.import_stop_words()
 
@@ -49,6 +51,10 @@ class Corpus:
 
             self.vocabulaire.update(document.tokens.keys())
             self.number_of_tokens += document.number_of_tokens
+            for token in document.tokens.keys():
+                if token not in self.stop_words:
+                    self.frequences[token] = self.frequences.get(
+                        token, 0) + document.tokens[token]
 
         self.vocabulaire -= self.stop_words
 
@@ -61,6 +67,11 @@ class Corpus:
         with open("./Data/CACM/common_words") as stop_words:
             for line in stop_words:
                 self.stop_words.add(line.strip())
+
+    def plot_rank_frequency(self):
+        plt.plot(range(len(self.frequences.keys())), sorted(
+            self.frequences.values(), reverse=True))
+        plt.show()
 
 
 def parse_file(file_location):
@@ -137,5 +148,7 @@ if __name__ == '__main__':
     corpus = Corpus(documents)
 
     print(corpus.vocabulaire)
-    print(len(corpus.vocabulaire))
-    print(corpus.number_of_tokens)
+    print(len(corpus.vocabulaire))  # sans les stop words
+    print(corpus.number_of_tokens)  # avec les stop words
+
+    corpus.plot_rank_frequency()
