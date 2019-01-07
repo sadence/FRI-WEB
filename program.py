@@ -151,13 +151,42 @@ def parse_file(file_location):
         return documents
 
 
+def create_inverted_index(blocks, stop_words):
+    # blocks is a list of iterators, with number_blocks = len(blocks)
+    # each block is a list of documents
+    # on considerera apres le fait de faire un BSTree
+    term2termID = dict()
+    docID2doc = dict()
+    termID2docIDs = dict()
+    for block in blocks:
+        for document in block:
+            docID = len(docID2doc)
+            docID2doc[docID] = document.title
+            for token in document.tokens.keys():
+                if token not in stop_words:
+                    termID = term2termID.get(token)
+                    if termID is None:
+                        term2termID[token] = len(term2termID)
+                    if termID2docIDs.get(termID) is None:
+                        termID2docIDs[termID] = []
+                    termID2docIDs[termID].append(docID)
+    return term2termID, docID2doc, termID2docIDs
+    
+
 if __name__ == '__main__':
     documents = parse_file("Data/CACM/cacm.all")
 
     corpus = Corpus(documents)
 
-    print(corpus.vocabulaire)
-    print(len(corpus.vocabulaire))  # sans les stop words
-    print(corpus.number_of_tokens)  # avec les stop words
+    # print(corpus.vocabulaire)
+    # print(len(corpus.vocabulaire))  # sans les stop words
+    # print(corpus.number_of_tokens)  # avec les stop words
 
-    corpus.plot_rank_frequency()
+    # corpus.plot_rank_frequency()
+
+    term2termID, docID2doc, termID2docIDs = create_inverted_index([corpus.documents], corpus.stop_words)
+    word = "algebra"
+    wordID = term2termID.get(word)
+    documentsID = termID2docIDs.get(wordID)
+    documents_titles = [docID2doc.get(documentID) for documentID in documentsID]
+    print(documents_titles)
