@@ -1,6 +1,7 @@
 # Project specific
 
 Data
+*.json
 
 # IDE
 

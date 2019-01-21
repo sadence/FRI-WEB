@@ -1,3 +1,4 @@
+import json
 import math
 import re
 from matplotlib import pyplot as plt
@@ -167,10 +168,15 @@ def create_inverted_index(blocks, stop_words):
                     termID = term2termID.get(token)
                     if termID is None:
                         term2termID[token] = len(term2termID)
+                        termID = 0
                     if termID2docIDs.get(termID) is None:
                         termID2docIDs[termID] = []
                     termID2docIDs[termID].append(docID)
     return term2termID, docID2doc, termID2docIDs
+
+def dump_json(file_name, data):
+    with open(file_name, 'w') as outputfile:
+        json.dump(data, outputfile)
     
 
 if __name__ == '__main__':
@@ -189,4 +195,7 @@ if __name__ == '__main__':
     wordID = term2termID.get(word)
     documentsID = termID2docIDs.get(wordID)
     documents_titles = [docID2doc.get(documentID) for documentID in documentsID]
+    dump_json('cacm_term2termID.json', term2termID)
+    dump_json('cacm_docID2doc.json', docID2doc)
+    dump_json('cacm_termID2docIDs.json', termID2docIDs)
     print(documents_titles)
