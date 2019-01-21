@@ -1,5 +1,6 @@
 import json
 import math
+import pickle
 import re
 from matplotlib import pyplot as plt
 
@@ -161,22 +162,35 @@ def create_inverted_index(blocks, stop_words):
     termID2docIDs = dict()
     for block in blocks:
         for document in block:
-            docID = len(docID2doc)
+            docID = str(len(docID2doc))
             docID2doc[docID] = document.title
             for token in document.tokens.keys():
                 if token not in stop_words:
                     termID = term2termID.get(token)
                     if termID is None:
-                        term2termID[token] = len(term2termID)
-                        termID = 0
+                        term2termID[token] = str(len(term2termID))
+                        termID = "0"
                     if termID2docIDs.get(termID) is None:
                         termID2docIDs[termID] = []
                     termID2docIDs[termID].append(docID)
     return term2termID, docID2doc, termID2docIDs
 
-def dump_json(file_name, data):
-    with open(file_name, 'w') as outputfile:
-        json.dump(data, outputfile)
+def dump(file_name, data, use="pickle"):
+    if use == "json":
+        with open(file_name + ".json", 'w') as outputfile:
+            json.dump(data, outputfile)
+    else:
+        with open(file_name + ".pickle", "wb") as outputfile:
+            pickle.dump(data, outputfile)
+
+def load(file_name, use="pickle"):
+    if use == "json":
+        with open(file_name + ".json", 'r') as inputfile:
+            data = json.load(inputfile)
+    else:
+        with open(file_name + ".pickle", "rb") as inputfile:
+            data = pickle.load(inputfile)
+    return data
     
 
 if __name__ == '__main__':
@@ -195,7 +209,9 @@ if __name__ == '__main__':
     wordID = term2termID.get(word)
     documentsID = termID2docIDs.get(wordID)
     documents_titles = [docID2doc.get(documentID) for documentID in documentsID]
-    dump_json('cacm_term2termID.json', term2termID)
-    dump_json('cacm_docID2doc.json', docID2doc)
-    dump_json('cacm_termID2docIDs.json', termID2docIDs)
+    dump('cacm_term2termID', term2termID)
+    dump('cacm_docID2doc', docID2doc)
+    dump('cacm_termID2docIDs', termID2docIDs)
+    data = load('cacm_docID2doc')
+    print(data["1"])
     print(documents_titles)

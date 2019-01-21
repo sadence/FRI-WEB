@@ -2,6 +2,7 @@
 
 Data
 *.json
+*.pickle
 
 # IDE
 
