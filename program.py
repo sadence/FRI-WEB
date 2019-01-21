@@ -3,11 +3,12 @@ import math
 import pickle
 import re
 from matplotlib import pyplot as plt
+import os
 
 
 class Document:
 
-    def __init__(self, index):
+    def __init__(self, index=None):
         self.index = index
         self.title = ''
         self.keywords = []
@@ -112,7 +113,7 @@ def parse_file(file_location):
                 pass
             elif line.startswith(markers['index']):
                 index = int(line[3:])
-                current_document = Document(index)
+                current_document = Document(index=index)
                 documents.append(current_document)
             elif line.startswith(markers['title']):
                 current_marker = 'title'
@@ -153,6 +154,22 @@ def parse_file(file_location):
         return documents
 
 
+def recursive_read_files(directory_path):
+    directories = os.listdir(directory_path)
+    directories = [
+        directory for directory in directories if directory[0] != '.']
+    print(directories)
+    for dir_name in directories:
+        files = os.listdir(directory_path + dir_name + '/')
+        for file_name in files:
+            with open(directory_path + dir_name + '/' + file_name, 'r') as file:
+                current_document = Document()
+                current_document.title = file_name
+                current_document.summary = file.read()
+                yield current_document
+        print("Done directory {}".format(dir_name))
+
+
 def create_inverted_index(blocks, stop_words):
     # blocks is a list of iterators, with number_blocks = len(blocks)
     # each block is a list of documents
@@ -175,6 +192,7 @@ def create_inverted_index(blocks, stop_words):
                     termID2docIDs[termID].append(docID)
     return term2termID, docID2doc, termID2docIDs
 
+
 def dump(file_name, data, use="pickle"):
     if use == "json":
         with open(file_name + ".json", 'w') as outputfile:
@@ -182,6 +200,7 @@ def dump(file_name, data, use="pickle"):
     else:
         with open(file_name + ".pickle", "wb") as outputfile:
             pickle.dump(data, outputfile)
+
 
 def load(file_name, use="pickle"):
     if use == "json":
@@ -191,27 +210,41 @@ def load(file_name, use="pickle"):
         with open(file_name + ".pickle", "rb") as inputfile:
             data = pickle.load(inputfile)
     return data
-    
+
 
 if __name__ == '__main__':
-    documents = parse_file("Data/CACM/cacm.all")
+    # documents = parse_file("Data/CACM/cacm.all")
 
-    corpus = Corpus(documents)
+    # corpus = Corpus(documents)
 
-    # print(corpus.vocabulaire)
-    # print(len(corpus.vocabulaire))  # sans les stop words
-    # print(corpus.number_of_tokens)  # avec les stop words
+    # # print(corpus.vocabulaire)
+    # # print(len(corpus.vocabulaire))  # sans les stop words
+    # # print(corpus.number_of_tokens)  # avec les stop words
 
-    # corpus.plot_rank_frequency()
+    # # corpus.plot_rank_frequency()
 
-    term2termID, docID2doc, termID2docIDs = create_inverted_index([corpus.documents], corpus.stop_words)
-    word = "algebra"
-    wordID = term2termID.get(word)
-    documentsID = termID2docIDs.get(wordID)
-    documents_titles = [docID2doc.get(documentID) for documentID in documentsID]
-    dump('cacm_term2termID', term2termID)
-    dump('cacm_docID2doc', docID2doc)
-    dump('cacm_termID2docIDs', termID2docIDs)
-    data = load('cacm_docID2doc')
-    print(data["1"])
-    print(documents_titles)
+    # term2termID, docID2doc, termID2docIDs = create_inverted_index(
+    #     [corpus.documents], corpus.stop_words)
+    # word = "algebra"
+    # wordID = term2termID.get(word)
+    # documentsID = termID2docIDs.get(wordID)
+    # documents_titles = [docID2doc.get(documentID)
+    #                     for documentID in documentsID]
+    # print(documents_titles)
+
+    # term2termID, docID2doc, termID2docIDs = create_inverted_index(
+    #     [corpus.documents], corpus.stop_words)
+    # word = "algebra"
+    # wordID = term2termID.get(word)
+    # documentsID = termID2docIDs.get(wordID)
+    # documents_titles = [docID2doc.get(documentID)
+    #                     for documentID in documentsID]
+    # dump('cacm_term2termID', term2termID)
+    # dump('cacm_docID2doc', docID2doc)
+    # dump('cacm_termID2docIDs', termID2docIDs)
+    # data = load('cacm_docID2doc')
+    # print(data["1"])
+    # print(documents_titles)
+
+    listeuh = recursive_read_files('./Data/CS276/pa1-data/')
+    corpus = Corpus(listeuh)
