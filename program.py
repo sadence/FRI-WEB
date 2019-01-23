@@ -154,19 +154,37 @@ def parse_file(file_location):
         return documents
 
 
-def recursive_read_files(directory_path):
+def recursive_read_files(directory_path, blocks=False):
+    """[summary]
+
+    Arguments:
+        directory_path {[type]} -- [description]
+
+    Keyword Arguments:
+        blocks {bool} -- Return a list of blocks of tokenized documents (default: {False})
+    """
+
     directories = os.listdir(directory_path)
     directories = [
         directory for directory in directories if directory[0] != '.']
     print(directories)
     for dir_name in directories:
+        if blocks:
+            block = []
         files = os.listdir(directory_path + dir_name + '/')
         for file_name in files:
             with open(directory_path + dir_name + '/' + file_name, 'r') as file:
                 current_document = Document()
-                current_document.title = file_name
+                current_document.title = "{}/{}".format(dir_name, file_name)
                 current_document.summary = file.read()
-                yield current_document
+                if blocks:
+                    # normally corpus calls tokenize
+                    current_document.tokenize()
+                    block.append(current_document)
+                else:
+                    yield current_document
+        if blocks:
+            yield block
         print("Done directory {}".format(dir_name))
 
 
@@ -246,5 +264,19 @@ if __name__ == '__main__':
     # print(data["1"])
     # print(documents_titles)
 
-    listeuh = recursive_read_files('./Data/CS276/pa1-data/')
-    corpus = Corpus(listeuh)
+    # listeuh = recursive_read_files('./Data/CS276/pa1-data/')
+    # corpus = Corpus(listeuh)
+
+    stop_words_set = set()
+    with open("./Data/CACM/common_words") as stop_words:
+        for line in stop_words:
+            stop_words_set.add(line.strip())
+        blocks = recursive_read_files('./Data/CS276/pa1-data/', blocks=True)
+        term2termID, docID2doc, termID2docIDs = create_inverted_index(
+            blocks, stop_words_set)
+        word = "algebra"
+        wordID = term2termID.get(word)
+        documentsID = termID2docIDs.get(wordID)
+        documents_titles = [docID2doc.get(documentID)
+                            for documentID in documentsID]
+        print(documents_titles)
