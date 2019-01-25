@@ -52,20 +52,26 @@ class Corpus:
         # Construit le vocabulaire
         for document in documents:
             document.tokenize()
-
-            self.vocabulaire.update(document.tokens.keys())
-            self.number_of_tokens += document.number_of_tokens
-            for token in document.tokens.keys():
-                if token not in self.stop_words:
-                    self.frequences[token] = self.frequences.get(
-                        token, 0) + document.tokens[token]
+            self.update_corpus(document)
 
         self.vocabulaire -= self.stop_words
 
     def add_document(self, document):
         if isinstance(document, Document):
             self.documents.append(document)
-            self.vocabulaire.update(document.tokens.keys())
+            self.update_corpus(document)
+    
+    def update_corpus(self, document):
+        self.vocabulaire.update(document.tokens.keys())
+        self.number_of_tokens += document.number_of_tokens
+        self.update_frequence(document)
+
+    def update_frequence(self, document) :
+        for token in document.tokens.keys():
+            if token not in self.stop_words:
+                self.frequences[token] = self.frequences.get(
+                    token, 0) + document.tokens[token]
+
 
     def import_stop_words(self):
         with open("./Data/CACM/common_words") as stop_words:
@@ -267,11 +273,13 @@ if __name__ == '__main__':
     # listeuh = recursive_read_files('./Data/CS276/pa1-data/')
     # corpus = Corpus(listeuh)
 
+    corpus = Corpus([])
     stop_words_set = set()
     with open("./Data/CACM/common_words") as stop_words:
         for line in stop_words:
             stop_words_set.add(line.strip())
         blocks = recursive_read_files('./Data/CS276/pa1-data/', blocks=True)
+        """
         term2termID, docID2doc, termID2docIDs = create_inverted_index(
             blocks, stop_words_set)
         word = "algebra"
@@ -280,3 +288,11 @@ if __name__ == '__main__':
         documents_titles = [docID2doc.get(documentID)
                             for documentID in documentsID]
         print(documents_titles)
+        """
+
+    for block in blocks:
+        for document in block:
+            corpus.add_document(document)
+    print(len(corpus.vocabulaire))
+    print(corpus.number_of_tokens)
+    corpus.plot_rank_frequency
