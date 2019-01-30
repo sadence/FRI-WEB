@@ -60,18 +60,17 @@ class Corpus:
         if isinstance(document, Document):
             self.documents.append(document)
             self.update_corpus(document)
-    
+
     def update_corpus(self, document):
         self.vocabulaire.update(document.tokens.keys())
         self.number_of_tokens += document.number_of_tokens
         self.update_frequence(document)
 
-    def update_frequence(self, document) :
+    def update_frequence(self, document):
         for token in document.tokens.keys():
             if token not in self.stop_words:
                 self.frequences[token] = self.frequences.get(
                     token, 0) + document.tokens[token]
-
 
     def import_stop_words(self):
         with open("./Data/CACM/common_words") as stop_words:
@@ -295,4 +294,4 @@ if __name__ == '__main__':
             corpus.add_document(document)
     print(len(corpus.vocabulaire))
     print(corpus.number_of_tokens)
-    corpus.plot_rank_frequency
+    corpus.plot_rank_frequency()
