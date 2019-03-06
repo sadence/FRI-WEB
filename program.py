@@ -34,6 +34,21 @@ def test_bqp(term2termID, docID2doc, termID2docIDs):
     print(f"Testing OR: {validation_or}")
 
 
+    validation_not = True
+
+    docIDs_both = bqp.parse("algebra NOT math")
+
+    for docID in docIDs_both:
+        validation_not = validation_not and (
+            docID in docIDs_algebra and docID not in docIDs_triangles)
+
+    print(f"Testing NOT: {validation_not}")
+
+
+
+
+
+
 class Document:
 
     def __init__(self, index=None):
