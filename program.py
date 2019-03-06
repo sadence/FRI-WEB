@@ -4,6 +4,7 @@ import pickle
 import re
 from matplotlib import pyplot as plt
 import os
+import numpy as np
 
 from query_parser import BooleanQueryParser
 
@@ -58,6 +59,7 @@ class Document:
         self.summary = ''
         self.tokens = dict()
         self.number_of_tokens = 0
+        self.vector = None
 
     def tokenize(self):
         # reset in case of retokenization
@@ -80,6 +82,16 @@ class Document:
                 self.tokens[token] = self.tokens.get(token, 0) + 1
                 self.number_of_tokens += 1
 
+    # vector_basis : Corpus.word2index
+    def vectorize(self, vector_basis):
+        # Initialisation du vecteur dans l'espace définit par l'ensemble des mots du corpus
+        self.vector = np.array(len(vector_basis.keys()) * [0])
+        for word in vector_basis.keys():
+            # Coordonnée du mot dans l'espace des vecteurs
+            index = vector_basis[word]
+            # frequence d'apparition du mot dans le document
+            self.vector[index] = self.tokens[word]
+
 
 class Corpus:
 
@@ -89,6 +101,7 @@ class Corpus:
         self.stop_words = set()
         self.number_of_tokens = 0
         self.frequences = dict()  # does not include stop words
+        self.word2index = dict()
 
         self.import_stop_words()
 
@@ -132,6 +145,13 @@ class Corpus:
         plt.title("Graphe log(f) / log(r)")
 
         plt.show()
+
+    def build_word2index(self):
+        sorted_words = list(self.vocabulaire)
+        sorted_words.sort()
+
+        for i in range(len(sorted_words)):
+            self.word2index[sorted_words[i]] = i
 
 
 def parse_file(file_location):
