@@ -8,6 +8,7 @@ pylint = "*"
 autopep8 = "*"
 
 [packages]
+matplotlib = "*"
 
 [requires]
 python_version = "3.7"

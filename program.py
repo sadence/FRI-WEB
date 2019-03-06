@@ -5,6 +5,34 @@ import re
 from matplotlib import pyplot as plt
 import os
 
+from query_parser import BooleanQueryParser
+
+
+def test_bqp(term2termID, docID2doc, termID2docIDs):
+    bqp = BooleanQueryParser(term2termID, docID2doc, termID2docIDs)
+    docIDs_both = bqp.parse("algebra AND math")
+    docIDs_algebra = bqp.parse("algebra")
+    docIDs_triangles = bqp.parse("math")
+
+    validation_and = True
+
+    for docID in docIDs_both:
+        validation_and = validation_and and (
+            docID in docIDs_algebra and docID in docIDs_triangles)
+
+    print(f"Testing AND: {validation_and}")
+
+    validation_or = True
+
+    docIDs_both = bqp.parse("algebra OR math")
+
+    for docID in docIDs_triangles:
+        validation_or = validation_or and (docID in docIDs_both)
+    for docID in docIDs_algebra:
+        validation_or = validation_or and (docID in docIDs_both)
+
+    print(f"Testing OR: {validation_or}")
+
 
 class Document:
 
@@ -272,26 +300,30 @@ if __name__ == '__main__':
     # listeuh = recursive_read_files('./Data/CS276/pa1-data/')
     # corpus = Corpus(listeuh)
 
-    corpus = Corpus([])
-    stop_words_set = set()
-    with open("./Data/CACM/common_words") as stop_words:
-        for line in stop_words:
-            stop_words_set.add(line.strip())
-        blocks = recursive_read_files('./Data/CS276/pa1-data/', blocks=True)
-        """
-        term2termID, docID2doc, termID2docIDs = create_inverted_index(
-            blocks, stop_words_set)
-        word = "algebra"
-        wordID = term2termID.get(word)
-        documentsID = termID2docIDs.get(wordID)
-        documents_titles = [docID2doc.get(documentID)
-                            for documentID in documentsID]
-        print(documents_titles)
-        """
+    # corpus = Corpus([])
+    # stop_words_set = set()
+    # with open("./Data/CACM/common_words") as stop_words:
+    #     for line in stop_words:
+    #         stop_words_set.add(line.strip())
+    #     blocks = recursive_read_files('./Data/CS276/pa1-data/', blocks=True)
 
-    for block in blocks:
-        for document in block:
-            corpus.add_document(document)
-    print(len(corpus.vocabulaire))
-    print(corpus.number_of_tokens)
-    corpus.plot_rank_frequency()
+    #     term2termID, docID2doc, termID2docIDs = create_inverted_index(
+    #         blocks, stop_words_set)
+    #     word = "algebra"
+        # wordID = term2termID.get(word)
+        # documentsID = termID2docIDs.get(wordID)
+        # documents_titles = [docID2doc.get(documentID)
+        #                     for documentID in documentsID]
+        # print(documents_titles)
+
+    term2termID = load('term2termID')
+    docID2doc = load('docID2doc')
+    termID2docIDs = load('termID2docIDs')
+
+    test_bqp(term2termID, docID2doc, termID2docIDs)
+    # for block in blocks:
+    #     for document in block:
+    #         corpus.add_document(document)
+    # print(len(corpus.vocabulaire))
+    # print(corpus.number_of_tokens)
+    # corpus.plot_rank_frequency()
