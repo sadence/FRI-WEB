@@ -13,12 +13,20 @@ class BooleanQueryParser:
         documents = set()
         and_ = False
         or_ = False
+        not_ = False
         for word in query_array:
             if word == "AND":
                 and_ = True
+                or_ = False
+                not_ = False
             elif word == "OR":
+                not_ = False
                 and_ = False
                 or_ = True
+            elif word == "NOT":
+                and_ = False
+                or_ = False
+                not_ = True
             else:
                 if and_:
                     documents = documents.intersection(
@@ -26,6 +34,10 @@ class BooleanQueryParser:
                     and_ = False
                 elif or_:
                     documents = documents.union(
+                        self.termID2docIDs[self.term2termID[word]])
+                    or_ = False
+                elif not_:
+                    documents = documents.difference(
                         self.termID2docIDs[self.term2termID[word]])
                     or_ = False
                 else:
