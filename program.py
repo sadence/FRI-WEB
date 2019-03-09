@@ -82,20 +82,34 @@ class Document:
                 self.number_of_tokens += 1
 
     # vector_basis : Corpus.word2index
-    def vectorize_frequence_normalisee(self, vector_basis):
+    def vectorize_frequence_normalisee(self, word2index):
         """Vectorisation par la methode de ponderation Fréquence Normalisée"""
         frequence_max = 0
         # Initialisation du vecteur dans l'espace définit par l'ensemble des mots du corpus
-        self.vector = np.array(len(vector_basis.keys()) * [0])
-        for word in vector_basis.keys():
+        self.vector = np.array(len(word2index.keys()) * [0])
+        for word in word2index.keys():
             # Coordonnée du mot dans l'espace des vecteurs
-            index = vector_basis[word]
+            index = word2index[word]
             # frequence d'apparition du mot dans le document
             frequence = self.tokens.get(word, 0)
             if frequence_max < frequence:
                 frequence_max = frequence
             self.vector[index] = frequence
         self.vector = self.vector / frequence_max
+
+    def vectorize_tf_idf(self, word2index, term2termID, termID2docIDs, len_documents):
+        """Vectorisation par la methode de ponderation Fréquence Normalisée"""
+        # Initialisation du vecteur dans l'espace définit par l'ensemble des mots du corpus
+        self.vector = np.array(len(word2index.keys()) * [0])
+        for word in word2index.keys():
+            # Coordonnée du mot dans l'espace des vecteurs
+            index = word2index[word]
+            # frequence d'apparition du mot dans le document
+            tf = self.tokens.get(word, 0)
+            idx_corp = term2termID[word]
+            idf = len_documents / len(termID2docIDs[idx_corp])
+            self.vector[index] = tf * idf
+        self.vector = self.vector
 
 
 class Corpus:
@@ -161,9 +175,15 @@ class Corpus:
         for i in range(len(vocabulaire_list)):
             self.word2index[vocabulaire_list[i]] = i
 
-    def vectorize_documents(self):
-        for document in self.documents:
-            document.vectorize_frequence_normalisee(self.word2index)
+    def vectorize_documents(self, method="freq_norm",  term2termID=None, termID2docIDs=None):
+        if method == "tf_idf":
+            if term2termID is None or termID2docIDs is None:
+                raise Exception("Missing arguments")
+            for document in self.documents:
+                document.vectorize_tf_idf(self.word2index, term2termID, termID2docIDs, len(self.documents))
+        else:
+            for document in self.documents:
+                document.vectorize_frequence_normalisee(self.word2index)
 
     def search_frequence_normalisee(self, query):
         if len(self.vectors) == 0:
@@ -185,6 +205,33 @@ class Corpus:
         if frequence_max == 0:
             raise Exception("No match found.")
         query_vector = query_vector / frequence_max
+
+        # Cosine
+        cossims = [(i, cos_sim(query_vector, vector))
+                   for i, vector in enumerate(self.vectors)]
+
+        return sorted(cossims, key=lambda tup: -tup[1])
+
+    def search_frequence_tf_idf(self, query, term2termID, termID2docIDs):
+        if len(self.vectors) == 0:
+            raise Exception("Cannot search Corpus. Documents not vectorized.")
+
+        vocab_size = len(self.word2index.keys())
+        reg = re.compile("[^a-zA-Z0-9]+")
+        query_vector = np.array(vocab_size * [0])
+
+        # Vectorisation
+        query = reg.split(query.lower())
+        for term in query:
+            index = self.word2index.get(term, None)
+            if not index is None:
+                query_vector[index] += 1 # computes tf
+        # compute idf when tf computation is done
+        for term in query:
+            index = self.word2index.get(term, None)
+            if not index is None:
+                idf = len(self.documents) / len(termID2docIDs[term2termID[term]])
+                query_vector[index] *= idf
 
         # Cosine
         cossims = [(i, cos_sim(query_vector, vector))
@@ -311,7 +358,7 @@ def create_inverted_index(blocks, stop_words):
                     termID = term2termID.get(token)
                     if termID is None:
                         term2termID[token] = str(len(term2termID))
-                        termID = "0"
+                        termID = term2termID[token]
                     if termID2docIDs.get(termID) is None:
                         termID2docIDs[termID] = []
                     termID2docIDs[termID].append(docID)
@@ -348,8 +395,8 @@ if __name__ == '__main__':
 
     # # corpus.plot_rank_frequency()
 
-    # term2termID, docID2doc, termID2docIDs = create_inverted_index(
-    #     [corpus.documents], corpus.stop_words)
+    term2termID, docID2doc, termID2docIDs = create_inverted_index(
+        [corpus.documents], corpus.stop_words)
     # word = "algebra"
     # wordID = term2termID.get(word)
     # documentsID = termID2docIDs.get(wordID)
@@ -406,17 +453,19 @@ if __name__ == '__main__':
     # corpus.plot_rank_frequency()
 
     # DUMPING VECTORS
-    # corpus.vectorize_documents()
+    # corpus.vectorize_documents(
+    #     method="tf_idf",  term2termID=term2termID, termID2docIDs=termID2docIDs)
 
     # data = [document.vector for document in corpus.documents]
 
-    # dump('CACM_freq_norm_vectors', data)
+    # dump('CACM_tf_idf_vectors', data)
 
     # END DUMPING VECTORS
 
-    corpus.vectors = load('CACM_freq_norm_vectors')
+    corpus.vectors = load('CACM_tf_idf_vectors')
 
-    result = corpus.search_frequence_normalisee("linear covfefe")[:20]
+    result = corpus.search_frequence_tf_idf(
+        "A Routine to Find the Solution of Simultaneous Linear", term2termID, termID2docIDs)[:20]
     human_readable = [(corpus.documents[idx].title, cos)
                       for idx, cos in result]
 
