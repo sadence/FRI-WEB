@@ -9,6 +9,10 @@ import numpy as np
 from query_parser import BooleanQueryParser
 
 
+def cos_sim(a, b):
+    return np.dot(a, b)/(np.linalg.norm(a)*np.linalg.norm(b))
+
+
 def test_bqp(term2termID, docID2doc, termID2docIDs):
     bqp = BooleanQueryParser(term2termID, docID2doc, termID2docIDs)
     docIDs_both = bqp.parse("algebra AND math")
@@ -34,7 +38,6 @@ def test_bqp(term2termID, docID2doc, termID2docIDs):
 
     print(f"Testing OR: {validation_or}")
 
-
     validation_not = True
 
     docIDs_both = bqp.parse("algebra NOT math")
@@ -44,10 +47,6 @@ def test_bqp(term2termID, docID2doc, termID2docIDs):
             docID in docIDs_algebra and docID not in docIDs_triangles)
 
     print(f"Testing NOT: {validation_not}")
-
-
-
-
 
 
 class Document:
@@ -83,14 +82,20 @@ class Document:
                 self.number_of_tokens += 1
 
     # vector_basis : Corpus.word2index
-    def vectorize(self, vector_basis):
+    def vectorize_frequence_normalisee(self, vector_basis):
+        """Vectorisation par la methode de ponderation Fréquence Normalisée"""
+        frequence_max = 0
         # Initialisation du vecteur dans l'espace définit par l'ensemble des mots du corpus
         self.vector = np.array(len(vector_basis.keys()) * [0])
         for word in vector_basis.keys():
             # Coordonnée du mot dans l'espace des vecteurs
             index = vector_basis[word]
             # frequence d'apparition du mot dans le document
-            self.vector[index] = self.tokens[word]
+            frequence = self.tokens.get(word, 0)
+            if frequence_max < frequence:
+                frequence_max = frequence
+            self.vector[index] = frequence
+        self.vector = self.vector / frequence_max
 
 
 class Corpus:
@@ -102,6 +107,7 @@ class Corpus:
         self.number_of_tokens = 0
         self.frequences = dict()  # does not include stop words
         self.word2index = dict()
+        self.vectors = []
 
         self.import_stop_words()
 
@@ -111,6 +117,8 @@ class Corpus:
             self.update_corpus(document)
 
         self.vocabulaire -= self.stop_words
+
+        self.build_word2index()
 
     def add_document(self, document):
         if isinstance(document, Document):
@@ -147,11 +155,42 @@ class Corpus:
         plt.show()
 
     def build_word2index(self):
-        sorted_words = list(self.vocabulaire)
-        sorted_words.sort()
+        vocabulaire_list = list(self.vocabulaire)
+        vocabulaire_list.sort()
 
-        for i in range(len(sorted_words)):
-            self.word2index[sorted_words[i]] = i
+        for i in range(len(vocabulaire_list)):
+            self.word2index[vocabulaire_list[i]] = i
+
+    def vectorize_documents(self):
+        for document in self.documents:
+            document.vectorize_frequence_normalisee(self.word2index)
+
+    def search_frequence_normalisee(self, query):
+        if len(self.vectors) == 0:
+            raise Exception("Cannot search Corpus. Documents not vectorized.")
+
+        frequence_max = 0
+        vocab_size = len(self.word2index.keys())
+        reg = re.compile("[^a-zA-Z0-9]+")
+        query_vector = np.array(vocab_size * [0])
+
+        # Vectorisation
+        query = reg.split(query.lower())
+        for term in query:
+            index = self.word2index.get(term, None)
+            if not index is None:
+                query_vector[index] += 1
+
+        frequence_max = max(query_vector)
+        if frequence_max == 0:
+            raise Exception("No match found.")
+        query_vector = query_vector / frequence_max
+
+        # Cosine
+        cossims = [(i, cos_sim(query_vector, vector))
+                   for i, vector in enumerate(self.vectors)]
+
+        return sorted(cossims, key=lambda tup: -tup[1])
 
 
 def parse_file(file_location):
@@ -299,9 +338,9 @@ def load(file_name, use="pickle"):
 
 
 if __name__ == '__main__':
-    # documents = parse_file("Data/CACM/cacm.all")
+    documents = parse_file("Data/CACM/cacm.all")
 
-    # corpus = Corpus(documents)
+    corpus = Corpus(documents)
 
     # # print(corpus.vocabulaire)
     # # print(len(corpus.vocabulaire))  # sans les stop words
@@ -345,20 +384,40 @@ if __name__ == '__main__':
     #     term2termID, docID2doc, termID2docIDs = create_inverted_index(
     #         blocks, stop_words_set)
     #     word = "algebra"
-        # wordID = term2termID.get(word)
-        # documentsID = termID2docIDs.get(wordID)
-        # documents_titles = [docID2doc.get(documentID)
-        #                     for documentID in documentsID]
-        # print(documents_titles)
+    # wordID = term2termID.get(word)
+    # documentsID = termID2docIDs.get(wordID)
+    # documents_titles = [docID2doc.get(documentID)
+    #                     for documentID in documentsID]
+    # print(documents_titles)
 
-    term2termID = load('term2termID')
-    docID2doc = load('docID2doc')
-    termID2docIDs = load('termID2docIDs')
+    # term2termID = load('term2termID')
+    # docID2doc = load('docID2doc')
+    # termID2docIDs = load('termID2docIDs')
 
-    test_bqp(term2termID, docID2doc, termID2docIDs)
+    # test_bqp(term2termID, docID2doc, termID2docIDs)
+
+    # --
+
     # for block in blocks:
     #     for document in block:
     #         corpus.add_document(document)
     # print(len(corpus.vocabulaire))
     # print(corpus.number_of_tokens)
     # corpus.plot_rank_frequency()
+
+    # DUMPING VECTORS
+    # corpus.vectorize_documents()
+
+    # data = [document.vector for document in corpus.documents]
+
+    # dump('CACM_freq_norm_vectors', data)
+
+    # END DUMPING VECTORS
+
+    corpus.vectors = load('CACM_freq_norm_vectors')
+
+    result = corpus.search_frequence_normalisee("linear covfefe")[:20]
+    human_readable = [(corpus.documents[idx].title, cos)
+                      for idx, cos in result]
+
+    print(human_readable)
