@@ -127,6 +127,9 @@ class Corpus:
         self.frequences = dict()  # does not include stop words
         self.word2index = dict()
         self.vectors = []
+        self.term2termID = {}
+        self.termID2docIDs = {}
+        self.docID2doc = {}
 
         self.import_stop_words()
 
@@ -180,12 +183,12 @@ class Corpus:
         for i in range(len(vocabulaire_list)):
             self.word2index[vocabulaire_list[i]] = i
 
-    def vectorize_documents(self, method="freq_norm",  term2termID=None, termID2docIDs=None, normalize=False):
+    def vectorize_documents(self, method="freq_norm", normalize=False):
         if method == "tf_idf":
-            if term2termID is None or termID2docIDs is None:
-                raise Exception("Missing arguments")
+            if not self.term2termID or not self.termID2docIDs:
+                raise Exception("Missing inverted index")
             for document in self.documents:
-                document.vectorize_tf_idf(self.word2index, term2termID, termID2docIDs, len(self.documents), normalize=normalize)
+                document.vectorize_tf_idf(self.word2index, self.term2termID, self.termID2docIDs, len(self.documents), normalize=normalize)
         else:
             for document in self.documents:
                 document.vectorize_frequence_normalisee(self.word2index)
@@ -219,7 +222,7 @@ class Corpus:
 
         return sorted(cossims, key=lambda tup: -tup[1])
 
-    def search_frequence_tf_idf(self, query, term2termID, termID2docIDs, normalize=False):
+    def search_frequence_tf_idf(self, query, normalize=False):
         if len(self.vectors) == 0:
             raise Exception("Cannot search Corpus. Documents not vectorized.")
 
@@ -237,7 +240,7 @@ class Corpus:
         for term in query:
             index = self.word2index.get(term, None)
             if not index is None:
-                idf = math.log(len(self.documents) / len(termID2docIDs[term2termID[term]]))
+                idf = math.log(len(self.documents) / len(self.termID2docIDs[self.term2termID[term]]))
                 query_vector[index] *= idf
         if normalize:
             query_vector = query_vector / frequence_max
@@ -474,9 +477,12 @@ if __name__ == '__main__':
     # END DUMPING VECTORS
 
     corpus.vectors = load('CACM_tf_idf_vectors')
+    corpus.term2termID = term2termID
+    corpus.docID2doc = docID2doc
+    corpus.termID2docIDs = termID2docIDs
 
-    result = corpus.search_frequence_tf_idf(
-        "A Routine to Find the Solution of Simultaneous Linear Equations with Polynomial Coefficients", term2termID, termID2docIDs, normalize=True)[:20]
+    query = "A Routine to Find the Solution of Simultaneous Linear Equations with Polynomial Coefficients"
+    result = corpus.search_frequence_tf_idf(query, normalize=True)[:20]
     human_readable = [(corpus.documents[idx].title, cos)
                       for idx, cos in result]
 
