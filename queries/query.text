@@ -428,12 +428,18 @@ languages: Pascal, CLU, Alphard, Russell, Ada, ALGOL 68, EL1.
 .W
  Theory of distributed systems and databases.  Subtopics of special
 interest include reliability and fault-tolerance in distributed systems,
-atomicity, distributed transactions, synchronization algorithms,
+atomicity, distributed transactions, synchronization algorithms, 
 resource allocation; lower bounds and models for asynchronous parallel
-systems.  Also theory of communicating processes and protocols.
+systems.  Also theory of communicating processes and protocols.   
 .N
  41. Michael J. Fischer, Computer Sci., Yale Univ., 10 Hillhouse Ave.,
      P.O. Box 2158 Yale Station, New Haven, Conn.  06520
+.V
+Theory of distributed systems and databases.  Subtopics of special
+interest include reliability and fault-tolerance in distributed systems,
+atomicity, distributed transactions, synchronization algorithms, 
+resource allocation; lower bounds and models for asynchronous parallel
+systems.  Also theory of communicating processes and protocols. 
 
 .I 42
 .W
@@ -442,6 +448,9 @@ and clustering.
 .N
  42. George R. Cross, Lousiana State Univ., Comp Sci Dept, Baton Rouge.,
      LA    70803
+.V
+Computer performance evaluation techniques using pattern recognition
+and clustering.
 
 .I 43
 .W
@@ -450,6 +459,10 @@ descriptions, shape recognition by computer.  Two-dimensional shapes.
 Measures of circularity.  Shape matching.
 .N
  43. George R. Cross
+.V
+Analysis and perception of shape by humans and computers.  Shape
+descriptions, shape recognition by computer.  Two-dimensional shapes.
+Measures of circularity.  Shape matching.
 
 .I 44
 .W
@@ -457,6 +470,9 @@ Measures of circularity.  Shape matching.
 synthesis. Perception of texture.
 .N
  44. George R. Cross
+.V
+Texture analysis by computer.	Digitized texture analysis.  Texture
+synthesis. Perception of texture.
 
 .I 45
 .W
@@ -465,6 +481,10 @@ performance.  This includes fine tuning decisions such as secondary index
 selection, file reorganization, and distributed databases.
 .N
  45. Donald Kraft, Louisiano State Univ., Comp Sci
+.V
+use of operations research models to optimize information system
+performance. fine tuning decisions secondary index
+selection, file reorganization, distributed databases.
 
 .I 46
 .W
@@ -473,6 +493,10 @@ retrieval problems.  This includes performance evaluation and automatic
 indexing considerations.
 .N
  46. Donald Kraft
+.V
+application of fuzzy subset theory to clustering, information
+retrieval problems. performance evaluation and automatic
+indexing considerations.
 
 .I 47
 .W
@@ -481,15 +505,23 @@ system performance.  This includes stopping rules to determine when a
 user should cease scanning the output of a retrieval search.
 .N
  47. Donald Kraft
+.V 
+use of Bayesian decision models, optimize information retrieval
+system performance.  stopping rules to determine when a
+user should cease scanning the output of a retrieval search.
 
 .I 48
 .W
- The use of computer science principles (e.g. data structures,
+ The use of computer science principles (e.g. data structures, 
 numerical methods) in generating optimization (e.g. linear programming)
 algorithms.  This includes issues of the Khachian (Russian, ellipsoidal)
 algorithm and complexity of such algorithms.
 .N
  48. Donald Kraft
+.V
+use of computer science principles, data structures, 
+numerical methods, generating optimization algorithms, linear programming.  
+issues of the Khachian complexity
 
 .I 49
 .W
@@ -497,24 +529,32 @@ algorithm and complexity of such algorithms.
 (i.e., expert systems).
 .N
  49. Donald H. Kraft
+.V
+role of information retrieval in knowledge based systems, expert systems
 
 .I 50
 .W
  Parallel processors in information retrieval
 .N
  50. Walter Rudd, Louisiana State Univ., Comp Sci
+.V 
+Parallel processors in information retrieval
 
 .I 51
 .W
  Parallel processors and paging algorithms
 .N
  51. Walter Rudd
+.V
+Parallel processors and paging algorithms
 
 .I 52
 .W
  Modelling and simulation in agricultural ecosystems.
 .N
  52. Walter Rudd
+.V
+Modelling and simulation in agricultural ecosystems.
 
 .I 53
 .W
@@ -524,6 +564,10 @@ morphism, transitivity, relations, relation matrix.
 .N
  53. H. F. Mattson, Jr., School of Computer and Information Science,
      Syracuse University, 313 Link Hall, Syracuse, N.Y. 13210
+.V
+mathematical induction, group theory, integers modulo m,
+probability, binomial coefficients, binomial theorem, homomorphism,
+morphism, transitivity, relations, relation matrix.
 
 .I 54
 .W
@@ -535,6 +579,9 @@ Dijkstra, E.
 .N
  54. Michael A. Arbib, Dept. Of Computer And Information Science,
  University of Massachusetts, Amherst, MA 01003
+.V
+Semantics of programming languages, including abstract specifications
+of data types, denotational semantics, and proofs of correctness.
 
 .I 55
 .W
@@ -542,6 +589,9 @@ Dijkstra, E.
 expressions or regular events.
 .N
  55. Maura Flatley, Comp Sci, Cornell
+.V
+star height of regular languages or regular
+expressions or regular events
 
 .I 56
 .W
@@ -549,6 +599,9 @@ expressions or regular events.
 to the study of automata and regular languages.
 .N
  56. Maura Flatley
+.V
+Articles relation the algebraic theory of semigroups and monoids
+to the study of automata and regular languages.
 
 .I 57
 .W
@@ -565,6 +618,10 @@ Lipton, R.J.
 Perlis, A.J.
 .N
  57. Maura Flatley, Comp Sci Cornell
+.V 
+Can programming be liberated from the Von Neumann style? 
+A functional style and its algebra of programs
+
 
 .I 58
 .W
@@ -574,6 +631,11 @@ statistical formula are of interest.  Student's t test, Wilcoxon and
 sign tests, multivariate and univariate components can be included.
 .N
  58. Ed Fox
+.V 
+Algorithms or statistical packages for ANOVA, regression using least
+squares or generalized linear models.  System design, capabilities,
+statistical formula are of interest.  Student's t test, Wilcoxon and
+sign tests, multivariate and univariate components can be included.
 
 .I 59
 .W
@@ -583,16 +645,27 @@ Hashing or indexing methods are usually applied to English spelling or
 natural language problems.
 .N
  59. Ed Fox
+.V 
+ Dictionary construction and accessing methods for fast retrieval
+of words or lexical items or morphologically related information.
+Hashing or indexing methods are usually applied to English spelling or
+natural language problems.
 
 .I 60
 .W
  Hardware and software relating to database management systems.
 Database packages, back end computers, special associative hardware
-with microcomputers attached to disk heads or things like RAP,
+with microcomputers attached to disk heads or things like RAP, 
 relational or network (CODASYL) or hierarchical models, systems
 like SYSTEM R, IMS, ADABAS, TOTAL, etc.
 .N
  60. Ed Fox
+.V
+Hardware and software relating to database management systems.
+Database packages, back end computers, special associative hardware
+with microcomputers attached to disk heads or things like RAP, 
+relational or network (CODASYL) or hierarchical models, systems
+like SYSTEM R, IMS, ADABAS, TOTAL
 
 .I 61
 .W
