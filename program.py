@@ -5,6 +5,7 @@ import re
 from matplotlib import pyplot as plt
 import os
 import numpy as np
+import math
 
 from query_parser import BooleanQueryParser
 
@@ -107,7 +108,7 @@ class Document:
             # frequence d'apparition du mot dans le document
             tf = self.tokens.get(word, 0)
             idx_corp = term2termID[word]
-            idf = len_documents / len(termID2docIDs[idx_corp])
+            idf =  math.log(len_documents / len(termID2docIDs[idx_corp]))
             self.vector[index] = tf * idf
         self.vector = self.vector
 
@@ -230,7 +231,7 @@ class Corpus:
         for term in query:
             index = self.word2index.get(term, None)
             if not index is None:
-                idf = len(self.documents) / len(termID2docIDs[term2termID[term]])
+                idf = math.log(len(self.documents) / len(termID2docIDs[term2termID[term]]))
                 query_vector[index] *= idf
 
         # Cosine
