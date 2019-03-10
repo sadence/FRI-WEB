@@ -149,6 +149,8 @@ horizontal microcoded machines; code compaction
 algorithms and efficiency
 .N
  21. Jim Mildrew (5 sep queries? comp complex, intract, c-c red, alg & eff)
+.V
+ computational complexity intractability class-complete reductions algorithms and efficiency
  
 .I 22
 .W
@@ -157,36 +159,48 @@ cylinders, toroids, spheres, and cones.  This is a rather specialized
 topic in computer graphics.
 .N
  22. Wally Dietrich (hidden line and surf alg)
+.V
+ hidden-line and hidden-surface algorithms for cylinders, toroids, spheres, and cones
  
 .I 23
 .W
  Distributed computing structures and algorithms
 .N
  23. Ozalp Babaoglu (dist comp struct & alg)
+.V
+ Distributed computing structures and algorithms
  
 .I 24
 .W
  Applied stochastic processes
 .N
  24. Ozalp Babaoglu (appl stochastic proc)
+.V
+ Applied stochastic processes
  
 .I 25
 .W
  Performance evaluation and modelling of computer systems
 .N
  25. Ozalp Babaoglu (perf eval)
+.V
+ Performance evaluation and modelling of computer systems
  
 .I 26
 .W
  Concurrency control mechanisms in operating systems
 .N
  26. Ozalp Babaoglu (concurrency control)
+.V
+ Concurrency control mechanisms in operating systems
   
 .I 27
 .W
  Memory management aspects of operating systems
 .N
  27. Ozalp Babaoglu (memory management)
+.V
+ Memory management aspects of operating systems
  
 .I 28
 .W
@@ -196,6 +210,10 @@ network topography.  I am not interested in the hardware used in the
 network.
 .N
  28. Dean Jagels (packet radio nets)
+.V
+ packet radio networks, algorithms for packet routing, changes in network topography
+.U
+ hardware
  
 .I 29
 .W
@@ -203,6 +221,8 @@ network.
 sieves, and Chinese Remainder theorem.
 .N
  29. Paul Pritchard (num-theoretic alg)
+.V
+ Number-theoretic algorithms, prime number series, sieves, and Chinese Remainder theorem.
  
 .I 30
 .W
@@ -210,6 +230,8 @@ sieves, and Chinese Remainder theorem.
 get" systems.  Examples: t/nroff, scribe, bravo.
 .N
  30. Dean Krafft (text formatters)
+.V
+ text formatting systems, "what you see is what you get" systems. t/nroff, scribe, bravo.
  
 .I 31
 .W
@@ -224,6 +246,10 @@ Andrews, H.C.
 Patterson, C.L.
 .N
  31. Bengt Aspvall (sing value decomp)
+.V
+ singular value decomposition in digital image processing, applications,
+approximations to the original image and restoring images that are subject to noise
+H.C. Andrews and C.L. Patterson "Outer product expansions and their uses in digital image processing"
  
 .I 32
 .W
@@ -233,6 +259,10 @@ ajacency matrix for the graph.  I'm especially interested in any heuristic
 algorithms for graph coloring and graph isomorphism using this method.
 .N
  32. Bengt Aspvall (graph alg / eigenvalue decomp)
+.V
+ graph algorithms based on the eigenvalue decomposition (or singular value
+decomposition) of the ajacency matrix for the graph.
+Heuristic algorithms for graph coloring and graph isomorphism.
  
 .I 33
 .W
@@ -250,6 +280,9 @@ Kahn, W.M.
 Stewart, G.W.
 .N
  33. Bengt Aspvall (sens of eigenval decomp of real matrices)
+.V
+ sensitivity of the eigenvalue decomposition of real matrices, zero-one matrices.
+The separation of eigenspaces corresponding to distinct eigenvalues.
  
 .I 34
 .W
@@ -260,6 +293,8 @@ more recent material.
 Heindel, L.E.
 .N
  34. Gaby Bracha (isolation of root polynomial)
+.V
+ Isolation of root of polynomial
  
 .I 35
 .W
@@ -271,12 +306,16 @@ Waztch, "Probabilistic testing of polynomial identities", SIAM
 Rabin,M.
 .N
  35. Gaby Bracha (prob alg)
+.V
+ Probabilistic algorithms, algebraic and symbolic manipulation.
  
 .I 36
 .W
  Fast algorithm for context-free language recognition or parsing
 .N
  36. Juris Hartmanis (fast alg for lang recog/parsing)
+.V
+ Fast algorithm for context-free language recognition or parsing
 
 .I 37
 .W
@@ -288,6 +327,9 @@ of the message and the receiver are both treating the bit stream as some
 particular type)
 .N
  37. Hal Perkins, Comp Sci, Cornell
+.V
+ The relationship between data types and concurrency
+type, synchronization attempt, message-passing system
 
 .I 38
 .W
@@ -297,6 +339,10 @@ I'm interested in questions about how one can check that a module "matches"
 contexts in which it is used.)
 .N
  38. Hal Perkins
+.V
+ type of a module, context matching
+.U
+ abstract data
 
 .I 39
 .W
@@ -306,6 +352,8 @@ that allow definition of abstract data types or programmer-supplied
 definitions of operators like *, +.)
 .N
  39. Hal Perkins
+.V
+ type compatibility meaning in languages that allow programmer defined types
 
 .I 40
 .W
@@ -315,6 +363,9 @@ that are referenced frequently in papers on the above languages (e.g. catch
 any languages with interesting type structures that I might have missed).
 .N
  40. Hal Perkins
+.V
+ data types
+languages: Pascal, CLU, Alphard, Russell, Ada, ALGOL 68, EL1.
 
 .I 41
 .W
