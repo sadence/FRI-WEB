@@ -4,7 +4,9 @@
 operating system for IBM computers?
 .N
  1. Richard Alexander, Comp Serv, Langmuir Lab (TSS)
- 
+.V
+ time sharing system IBM operating system
+
 .I 2
 .W
  I am interested in articles written either by Prieve or Udo Pooch
@@ -13,13 +15,17 @@ Prieve, B.
 Pooch, U.
 .N
  2. Richard Alexander, Comp Serv, Langmuir Lab (author = Pooch or Prieve)
- 
+.V
+Prieve Udo Pooch
+
 .I 3
 .W
  Intermediate languages used in construction of multi-targeted compilers; TCOLL
 .N
  3. Donna Bergmark, Comp Serv, Uris Hall (intermed lang)
- 
+.V
+ Intermediate languages construction multi-targeted compilers
+
 .I 4
 .W
  I'm interested in mechanisms for communicating between disjoint processes,
@@ -29,6 +35,8 @@ as opposed to theoretical work on the abstract problem.  Remote procedure
 calls and message-passing are examples of my interests.
 .N
  4. Pavel Curtis (comm mech for disjoint processes)
+.V
+ disjoint processes distributed environment remote procedure calls message-passing
 
 .I 5
 .W
@@ -38,8 +46,10 @@ human interface design, with views on improvements to user efficiency,
 effectiveness and satisfaction.
 .N
  5. Pavel Curtis (editing interfaces)
+.V
+ design and implementation interfaces window-managers user efficiency effectiveness and satisfaction
 
- 
+
 .I 6
 .W
  Interested in articles on robotics, motion planning particularly the
@@ -47,7 +57,11 @@ geometric and combinatorial aspects.  We are not interested in the
 dynamics of arm motion.
 .N
  6. John Hopcroft (robotics)
- 
+.V
+ robotics motion planning geometric combinatorial
+.U
+ dynamics arm motion
+
 .I 7
 .W
  I am interested in distributed algorithms - concurrent programs in
@@ -56,100 +70,128 @@ Areas of particular interest include fault-tolerance and techniques
 for understanding the correctness of these algorithms.
 .N
  7. Fred Schneider (dist algorithms)
- 
+.V
+ distributed algorithm message passing fault tolerance correctness
+
 .I 8
 .W
  Addressing schemes for resources in networks; resource addressing in
 network operating systems
 .N
  8. Alison Brown (addr in networks)
- 
+.V
+ network ressource schemes operating systems
+
 .I 9
 .W
  Security considerations in local networks, network operating systems,
 and distributed systems.
 .N
  9. Alison Brown (security in networks)
- 
+.V
+ security local networks network operating systems distributed
+
 .I 10
 .W
  Parallel languages; languages for parallel computation
 .N
  10. Alec Grimison, Comp Serv, Uris Hall (parallel lang)
- 
+.V
+ parallel languages computation
+
 .I 11
 .W
  SETL, Very High Level Languages
 .N
  11. Alec Grimison (SETL; very high level lang)
+.V
+ SETL, Very High Level Languages
 
- 
 .I 12
 .W
  portable operating systems
 .N
  12. Ralph Johnson (portable op sys)
- 
+.V
+ portable operating systems
+
+
 .I 13
 .W
  code optimization for space efficiency
 .N
  13. Ralph Johnson (code opt for space)
- 
+.V
+ code optimization for space efficiency
+
 .I 14
 .W
  find all discussions of optimal implementations of sort algorithms for
 database management applications
 .N
  14. Kenneth Wilson, Physics, Newman Lab (sort for database)
- 
+.V
+ optimal implementations of sort algorithms for database management applications
+
 .I 15
 .W
  Find all discussions of horizontal microcode optimization with special
 emphasis on optimization of loops and global optimization.
 .N
  15. Kenneth Wilson (horizontal microcode opt)
- 
+.V
+ horizontal microcode optimization loops global optimization
+
 .I 16
 .W
  find all descriptions of file handling in operating systems based on
 multiple processes and message passing.
 .N
  16. Kenneth Wilson (file handling in dist sys)
- 
+.V
+ file handling in operating systems multiple processes message passing
+
 .I 17
 .W
  Optimization of intermediate and machine code
 .N
  17. Donna Bergmark (opt of intermediate code)
- 
+.V
+ Optimization of intermediate and machine code
+
 .I 18
 .W
  Languages and compilers for parallel processors, especially highly
 horizontal microcoded machines; code compaction
 .N
  18. Donna Bergmark (lang for parallel proc)
- 
+.V
+ compilers for parallel processors horizontal microcoded machines code compaction
+
 .I 19
 .W
  Parallel algorithms
 .N
  19. Chanderjit Bajaj (parallel algorithms)
+.V
+ parallel algorithms
 
- 
+
 .I 20
 .W
  Graph theoretic algorithms applicable to sparse matrices
 .N
  20. Chanderjit Bajaj (graph alg for sparce matrices)
- 
+.V
+ Graph theoretic algorithms sparse matrices
+
 .I 21
 .W
  computational complexity, intractability, class-complete reductions,
 algorithms and efficiency
 .N
  21. Jim Mildrew (5 sep queries? comp complex, intract, c-c red, alg & eff)
- 
+
 .I 22
 .W
  I am interested in hidden-line and hidden-surface algorithms for
@@ -157,37 +199,37 @@ cylinders, toroids, spheres, and cones.  This is a rather specialized
 topic in computer graphics.
 .N
  22. Wally Dietrich (hidden line and surf alg)
- 
+
 .I 23
 .W
  Distributed computing structures and algorithms
 .N
  23. Ozalp Babaoglu (dist comp struct & alg)
- 
+
 .I 24
 .W
  Applied stochastic processes
 .N
  24. Ozalp Babaoglu (appl stochastic proc)
- 
+
 .I 25
 .W
  Performance evaluation and modelling of computer systems
 .N
  25. Ozalp Babaoglu (perf eval)
- 
+
 .I 26
 .W
  Concurrency control mechanisms in operating systems
 .N
  26. Ozalp Babaoglu (concurrency control)
-  
+
 .I 27
 .W
  Memory management aspects of operating systems
 .N
  27. Ozalp Babaoglu (memory management)
- 
+
 .I 28
 .W
  Any information on packet radio networks.  Of particular interest are
@@ -196,21 +238,21 @@ network topography.  I am not interested in the hardware used in the
 network.
 .N
  28. Dean Jagels (packet radio nets)
- 
+
 .I 29
 .W
  Number-theoretic algorithms, especially involving prime number series,
 sieves, and Chinese Remainder theorem.
 .N
  29. Paul Pritchard (num-theoretic alg)
- 
+
 .I 30
 .W
  Articles on text formatting systems, including "what you see is what you
 get" systems.  Examples: t/nroff, scribe, bravo.
 .N
  30. Dean Krafft (text formatters)
- 
+
 .I 31
 .W
  I'd like to find articles describing the use of singular value decomposition
@@ -224,7 +266,7 @@ Andrews, H.C.
 Patterson, C.L.
 .N
  31. Bengt Aspvall (sing value decomp)
- 
+
 .I 32
 .W
  I'd like to find articles describing graph algorithms that are based on
@@ -233,7 +275,7 @@ ajacency matrix for the graph.  I'm especially interested in any heuristic
 algorithms for graph coloring and graph isomorphism using this method.
 .N
  32. Bengt Aspvall (graph alg / eigenvalue decomp)
- 
+
 .I 33
 .W
  Articles about the sensitivity of the eigenvalue decomposition of real
@@ -250,7 +292,7 @@ Kahn, W.M.
 Stewart, G.W.
 .N
  33. Bengt Aspvall (sens of eigenval decomp of real matrices)
- 
+
 .I 34
 .W
  Currently interested in isolation of root of polynomial; there is an old
@@ -260,7 +302,7 @@ more recent material.
 Heindel, L.E.
 .N
  34. Gaby Bracha (isolation of root polynomial)
- 
+
 .I 35
 .W
  Probabilistic algorithms especially those dealing with algebraic and
@@ -271,7 +313,7 @@ Waztch, "Probabilistic testing of polynomial identities", SIAM
 Rabin,M.
 .N
  35. Gaby Bracha (prob alg)
- 
+
 .I 36
 .W
  Fast algorithm for context-free language recognition or parsing
@@ -281,7 +323,7 @@ Rabin,M.
 .I 37
 .W
  Articles describing the relationship between data types and concurrency
-(e.g. what is the type of a process?  when is a synchronization attempt 
+(e.g. what is the type of a process?  when is a synchronization attempt
 between two processes "type correct"?  in a message-passing system is there
 any notion of the types of messages?--i.e. any way to check that the sender
 of the message and the receiver are both treating the bit stream as some
@@ -320,9 +362,9 @@ any languages with interesting type structures that I might have missed).
 .W
  Theory of distributed systems and databases.  Subtopics of special
 interest include reliability and fault-tolerance in distributed systems,
-atomicity, distributed transactions, synchronization algorithms, 
+atomicity, distributed transactions, synchronization algorithms,
 resource allocation; lower bounds and models for asynchronous parallel
-systems.  Also theory of communicating processes and protocols.   
+systems.  Also theory of communicating processes and protocols.
 .N
  41. Michael J. Fischer, Computer Sci., Yale Univ., 10 Hillhouse Ave.,
      P.O. Box 2158 Yale Station, New Haven, Conn.  06520
@@ -376,7 +418,7 @@ user should cease scanning the output of a retrieval search.
 
 .I 48
 .W
- The use of computer science principles (e.g. data structures, 
+ The use of computer science principles (e.g. data structures,
 numerical methods) in generating optimization (e.g. linear programming)
 algorithms.  This includes issues of the Khachian (Russian, ellipsoidal)
 algorithm and complexity of such algorithms.
@@ -480,7 +522,7 @@ natural language problems.
 .W
  Hardware and software relating to database management systems.
 Database packages, back end computers, special associative hardware
-with microcomputers attached to disk heads or things like RAP, 
+with microcomputers attached to disk heads or things like RAP,
 relational or network (CODASYL) or hierarchical models, systems
 like SYSTEM R, IMS, ADABAS, TOTAL, etc.
 .N
@@ -495,13 +537,17 @@ space model, Boolean search methods using inverted files, feedback, etc.
 Salton, G.
 .N
  61. Ed Fox
+.V
+clustering bibliographic coupling citations co-citations vector space model Boolean search methods using inverted files feedback
 
 .I 62
 .W
  Results relating parallel complexity theory (both for PRAM's and
 uniform circuits).
 .N
- 62. Mark W. Krentel, Comp Sci Cornell 
+ 62. Mark W. Krentel, Comp Sci Cornell
+.V
+parallel complexity theory PRAM uniform circuits
 
 .I 63
 .W
@@ -509,6 +555,8 @@ uniform circuits).
 between parallel and sequential algorithms.
 .N
  63. Mark W. Krentel
+.V
+ parallel computation sequential algorithms
 
 .I 64
 .W
@@ -516,4 +564,6 @@ between parallel and sequential algorithms.
 remember how they did it.
 .N
  64. Hal Perkins, Comp Sci, Cornell
+.V
+ EL1 ECL
 
