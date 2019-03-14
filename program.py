@@ -306,6 +306,7 @@ def parse_file(file_location):
                 current_marker = 'keywords'
 
             else:
+                line = line.lower()
                 if current_marker == 'title':
                     if len(current_document.title) > 0:
                         current_document.title += " "
@@ -403,14 +404,20 @@ if __name__ == '__main__':
 
     corpus = Corpus(documents)
 
-    # # print(corpus.vocabulaire)
-    # # print(len(corpus.vocabulaire))  # sans les stop words
-    # # print(corpus.number_of_tokens)  # avec les stop words
+    # print(corpus.vocabulaire)
+    print("vocabulaire", len(corpus.vocabulaire))  # sans les stop words
+    print("tokens", corpus.number_of_tokens)  # avec les stop words
 
     # # corpus.plot_rank_frequency()
 
     term2termID, docID2doc, termID2docIDs = create_inverted_index(
-        [corpus.documents], corpus.stop_words)
+         [corpus.documents], corpus.stop_words)
+    corpus.term2termID = term2termID
+    corpus.docID2doc = docID2doc
+    corpus.termID2docIDs = termID2docIDs
+
+    print(len(corpus.term2termID), len(corpus.word2index))
+
     # word = "algebra"
     # wordID = term2termID.get(word)
     # documentsID = termID2docIDs.get(wordID)
@@ -425,9 +432,9 @@ if __name__ == '__main__':
     # documentsID = termID2docIDs.get(wordID)
     # documents_titles = [docID2doc.get(documentID)
     #                     for documentID in documentsID]
-    # dump('cacm_term2termID', term2termID)
-    # dump('cacm_docID2doc', docID2doc)
-    # dump('cacm_termID2docIDs', termID2docIDs)
+    dump('cacm_term2termID', term2termID)
+    dump('cacm_docID2doc', docID2doc)
+    dump('cacm_termID2docIDs', termID2docIDs)
     # data = load('cacm_docID2doc')
     # print(data["1"])
     # print(documents_titles)
@@ -467,8 +474,7 @@ if __name__ == '__main__':
     # corpus.plot_rank_frequency()
 
     # DUMPING VECTORS
-    # corpus.vectorize_documents(
-    #     method="tf_idf",  term2termID=term2termID, termID2docIDs=termID2docIDs, normalize=True)
+    # corpus.vectorize_documents(method="tf_idf")
 
     # data = [document.vector for document in corpus.documents]
 
@@ -476,14 +482,14 @@ if __name__ == '__main__':
 
     # END DUMPING VECTORS
 
-    corpus.vectors = load('CACM_tf_idf_vectors')
-    corpus.term2termID = term2termID
-    corpus.docID2doc = docID2doc
-    corpus.termID2docIDs = termID2docIDs
+    # corpus.vectors = load('CACM_tf_idf_vectors')
+    # corpus.term2termID = term2termID
+    # corpus.docID2doc = docID2doc
+    # corpus.termID2docIDs = termID2docIDs
 
-    query = "A Routine to Find the Solution of Simultaneous Linear Equations with Polynomial Coefficients"
-    result = corpus.search_frequence_tf_idf(query, normalize=True)[:20]
-    human_readable = [(corpus.documents[idx].title, cos)
-                      for idx, cos in result]
+    # query = "A Routine to Find the Solution of Simultaneous Linear Equations with Polynomial Coefficients"
+    # result = corpus.search_frequence_tf_idf(query)[:20]
+    # human_readable = [(corpus.documents[idx].title, cos)
+    #                   for idx, cos in result]
 
-    print(human_readable)
+    # print(human_readable)
